@@ -1,5 +1,7 @@
 package view;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -20,6 +22,12 @@ public class DolgozokGui extends javax.swing.JFrame {
     public DolgozokGui() {
         initComponents();
     }
+
+    int osszKor = 0;
+    int legIdosebb = Integer.MIN_VALUE;
+    boolean hatEveDolgozo = false;
+    String hatEveDolgozoNeve = "";
+    String kivalasztottNem = "";
 
     /**
      * Creates new form DolgozokGui
@@ -90,6 +98,11 @@ public class DolgozokGui extends javax.swing.JFrame {
         fiuComboBox.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
                 fiuComboBoxComponentAdded(evt);
+            }
+        });
+        fiuComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fiuComboBoxActionPerformed(evt);
             }
         });
 
@@ -179,6 +192,11 @@ public class DolgozokGui extends javax.swing.JFrame {
         );
 
         jButton1.setText("Ment");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -262,10 +280,6 @@ public class DolgozokGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lanyRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lanyRadioActionPerformed
-        int osszKor = 0;
-        int legIdosebb = Integer.MIN_VALUE;
-        boolean hatEveDolgozo = false;
-        String hatEveDolgozoNeve = "";
         ArrayList<Emberek> adatok = null;
         try {
             adatok = beolvas();
@@ -273,6 +287,12 @@ public class DolgozokGui extends javax.swing.JFrame {
             Logger.getLogger(DolgozokGui.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (isEnabled()) {
+            osszKor = 0;
+            legIdosebb = Integer.MIN_VALUE;
+            hatEveDolgozo = false;
+            hatEveDolgozoNeve = "";
+            kivalasztottNem = "";
+            kivalasztottNem = "Lányok";
             for (Emberek ember : adatok) {
                 if (ember.getNeme().equals("L")) {
                     osszKor += ember.getKor();
@@ -292,10 +312,7 @@ public class DolgozokGui extends javax.swing.JFrame {
     }//GEN-LAST:event_lanyRadioActionPerformed
 
     private void fiuRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiuRadioActionPerformed
-        int osszKor = 0;
-        int legIdosebb = Integer.MIN_VALUE;
-        boolean hatEveDolgozo = false;
-        String hatEveDolgozoNeve = "";
+
         ArrayList<Emberek> adatok = null;
         try {
             adatok = beolvas();
@@ -303,6 +320,12 @@ public class DolgozokGui extends javax.swing.JFrame {
             Logger.getLogger(DolgozokGui.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (isEnabled()) {
+            osszKor = 0;
+            legIdosebb = Integer.MIN_VALUE;
+            hatEveDolgozo = false;
+            hatEveDolgozoNeve = "";
+            kivalasztottNem = "";
+            kivalasztottNem = "Fiúk";
             for (Emberek ember : adatok) {
                 if (ember.getNeme().equals("F")) {
                     osszKor += ember.getKor();
@@ -354,6 +377,25 @@ public class DolgozokGui extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_fiuComboBoxComponentAdded
+
+    private void fiuComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiuComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fiuComboBoxActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String kiirandoAdatok = kivalasztottNem + ":\nLegidősebb: " + legIdosebb + "\nösszes kor: " + osszKor + "\n6 éve dolgozó: " + hatEveDolgozoNeve;
+
+        try {
+            FileWriter myWriter = new FileWriter("dolgozok.txt");
+            myWriter.write(kiirandoAdatok);
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
