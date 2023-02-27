@@ -1,6 +1,6 @@
 package model;
 
-class Emberek {
+public class Emberek {
     String nev;
     int kor;
     String neme;
@@ -28,7 +28,7 @@ class Emberek {
     public int getMunkTöltÉv() {
         return munkTöltÉv;
     }
-    
+
     
     
 
